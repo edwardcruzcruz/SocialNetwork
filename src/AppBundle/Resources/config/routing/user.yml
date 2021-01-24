@@ -1,0 +1,29 @@
+#nombre de la ruta
+login:
+    #Direccion de la ruta
+    path: /login
+    #Accion de la ruta antepniendo _controller:<Bundle>:<Class>:<Function>
+    defaults: { _controller: AppBundle:User:Login }
+
+login_check:
+    path: /login_check
+    
+logout:
+    path: /logout
+    
+register:
+    #Direccion de la ruta
+    path: /register
+    #Accion de la ruta antepniendo _controller:<Bundle>:<Class>:<Function>
+    defaults: { _controller: AppBundle:User:register }
+    
+user_nick_test:
+    path: /nick-test
+    defaults: { _controller: AppBundle:User:nickTest }
+    #definimos un metodo para que esta solicitud url sea solo accesada por metodos post
+    #desde cualquier client rest
+    methods: [POST]
+    
+user_edit:
+    path: /my-data
+    defaults: { _controller: AppBundle:User:editUser }

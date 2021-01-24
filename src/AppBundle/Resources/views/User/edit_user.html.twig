@@ -1,0 +1,11 @@
+{% extends "AppBundle:Layout:layout.html.twig"%}
+{% block content %}
+    <div class="col-lg-8 box-form">
+        <h2>Mis datos: </h2>
+        <hr/>
+        <!--enctype y multipart/form-data se usan cuando necesitamos tenemos entradas del tipo input type="File"-->
+        <!--Mas info: https://stackoverflow.com/questions/4526273/what-does-enctype-multipart-form-data-mean-->
+        {{form_start(form,{'enctype':'multipart/form-data'})}}
+        {{form_end(form)}}
+    </div>
+{% endblock %}

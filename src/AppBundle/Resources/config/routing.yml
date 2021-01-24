@@ -1,0 +1,14 @@
+#Cargamos todas las rutas de cada aplicacion, en este caso es del usuario
+app_user:
+    resource: "@AppBundle/Resources/config/routing/user.yml"
+    prefix: /
+    
+#Cargamos todas las rutas de cada aplicacion, en este caso es del usuario
+app_publication:
+    resource: "@AppBundle/Resources/config/routing/publication.yml"
+    prefix: /
+    
+#definiendo la ruta por defecto, si no no fnciona app/config/routing.yml
+app_homepage:
+    path: /
+    defaults: { _controller: AppBundle:User:Login }

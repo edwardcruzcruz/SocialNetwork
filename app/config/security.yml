@@ -1,0 +1,41 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+    encoders:
+        #encriptacion para el registro, validacion de contraseña y login
+        BackendBundle\Entity\User:
+            #tipo de algoritmo a usar
+            algorithm: bcrypt
+            #cantidad de veces que se repetira la accion
+            cost: 4
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+    # used to reload user from session & other features (e.g. switch_user)
+        user_db_provider:
+            entity:
+                class: BackendBundle:User
+                property: email
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            provider: user_db_provider
+            form_login:
+                login_path: /login
+                check_path: /login_check
+            logout:
+                path: logout
+                target: /
+                        
+            # activate different ways to authenticate
+            logout_on_user_change: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            #form_login: ~
