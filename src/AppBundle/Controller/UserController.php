@@ -161,7 +161,7 @@ class UserController extends Controller {
                 
                 $user_isset = $query->getResult();
 
-                if ( ($user->getEmail()== $user_isset[0]->getEmail() && $user->getNick()== $user_isset[0]->getNick()) ||count($user_isset) == 0) {
+                if (count($user_isset) == 0 || ($user->getEmail()== $user_isset[0]->getEmail() && $user->getNick()== $user_isset[0]->getNick())) {
                     //upload file
                     $file = $form['image']->getData();
                     if (!empty($file) && $file!=null){
@@ -200,6 +200,57 @@ class UserController extends Controller {
                     //createView() nos genera el html del formulario
                     "form" => $form->createView()
         ));
+    }
+    public function usersAction(Request $request){
+        //obtenemos una instancia de la entity manager
+        $em = $this->getDoctrine()->getManager();
+        //Query en lenguaje sql
+        $dql = "SELECT u FROM BackendBundle:User u ORDER BY u.id ASC";
+        //hacemos la consulta y la guardamos en $query
+        $query = $em->createQuery($dql);
+        
+        //obtenemos una instancia de paginator d knpPaginator
+        $paginator =  $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                                            $query,
+                                            $request->query->getInt('page',1),
+                                            5);
+        return $this->render('AppBundle:User:users.html.twig',array(
+                'pagination'=> $pagination
+            )
+        );
+        //var_dump("Esta es la lista de gente que tienes como contacto");
+        //die();
+    }
+    public function searchAction(Request $request){
+        //obtenemos una instancia de la entity manager
+        $em = $this->getDoctrine()->getManager();
+        //Query en lenguaje sql
+        
+        $search = $request->query->get("search",null);
+        if($search == null){
+            return $this->redirect($this->generateUrl("home_publication"));
+        }
+        //notese el parametro search como es introducido en el query,
+        //ojo con los espacios en los queries searchORDER BY (MAL), search ORDER BY (BIEN).
+        $dql = "SELECT u FROM BackendBundle:User u "
+                . "WHERE u.name LIKE :search OR u.surname LIKE :search OR u.nick LIKE :search"
+                . " ORDER BY u.id ASC";
+        //hacemos la consulta y la guardamos en $query
+        $query = $em->createQuery($dql)->setParameter("search","%$search%");
+        
+        //obtenemos una instancia de paginator d knpPaginator
+        $paginator =  $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                                            $query,
+                                            $request->query->getInt('page',1),
+                                            5);
+        return $this->render('AppBundle:User:users.html.twig',array(
+                'pagination'=> $pagination
+            )
+        );
+        //var_dump("Esta es la lista de gente que tienes como contacto");
+        //die();
     }
 
 }
