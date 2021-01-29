@@ -33,3 +33,14 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    
+    
+    #ya no hay necesidad de incluir las extensiones como servicios mas
+    #    doctrine: "@doctrine"
+    #autowire: true,
+    #following.twig_extension:
+    #    class: AppBundle\Twig\FollowingExtension
+    #    public: false,
+    #    arguments: ['@doctrine']
+    #    tags:
+    #        - { name: twig.extension }

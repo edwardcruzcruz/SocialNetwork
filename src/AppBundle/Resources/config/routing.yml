@@ -8,6 +8,11 @@ app_publication:
     resource: "@AppBundle/Resources/config/routing/publication.yml"
     prefix: /
     
+#Cargamos todas las rutas de cada aplicacion, en este caso es del usuario
+app_following:
+    resource: "@AppBundle/Resources/config/routing/following.yml"
+    prefix: /
+    
 #definiendo la ruta por defecto, si no no fnciona app/config/routing.yml
 app_homepage:
     path: /
